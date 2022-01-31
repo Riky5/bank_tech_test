@@ -1,7 +1,6 @@
 require_relative 'bank_account'
 
 class Bank
-
   attr_reader :account
 
   def initialize(bank_account)
