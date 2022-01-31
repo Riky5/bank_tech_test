@@ -11,13 +11,13 @@ class BankAccount
     @balance
   end
 
-  def add_to_balance(amount, today = Time.new.strftime('%d/%m/%Y'))
-    @balance += amount
-    @transactions << { :date => "#{today}", :credit => "#{amount}".to_i, :balance => read_balance }
+  def add_to_balance(credit, today = Time.new.strftime('%d/%m/%Y'))
+    @balance += credit
+    @transactions << { :date => "#{today}", :credit => "#{credit}.00".to_i, :debit => 0, :balance => read_balance }
   end
 
-  def remove_from_balance(amount, today = Time.new.strftime('%d/%m/%Y'))
-    @balance -= amount
-    @transactions << { :date => "#{today}", :debit => "#{amount}".to_i, :balance => read_balance }
+  def remove_from_balance(debit, today = Time.new.strftime('%d/%m/%Y'))
+    @balance -= debit
+    @transactions << { :date => "#{today}", :credit => 0, :debit => "#{debit}.00".to_i, :balance => read_balance }
   end
 end

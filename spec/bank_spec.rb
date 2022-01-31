@@ -22,4 +22,20 @@ describe Bank do
       expect(bank.account.read_balance).to eq 500
     end
   end
+
+  describe '#print_statement' do
+    context 'prints all transactions with details'
+    it 'returns credit and debit transactions' do
+      transactions = [{ :date => '31/01/2022', :credit => sprintf("%.2f",1000.00), :debit => "0", :balance => sprintf("%.2f",1000.00) }, { :date => '31/01/2022', :credit => sprintf("%.2f",2000.00), :debit => "0", :balance => sprintf("%.2f",3000.00) }, { :date => '31/01/2022', :credit => "0", :debit => sprintf("%.2f",500.00), :balance => sprintf("%.2f",2500.00) }]
+      allow(bank_account).to receive(:transactions).and_return(transactions)
+
+      expect{ bank.print_statement }.to output(<<-output
+date       || credit  ||  debit  || balance
+31/01/2022 ||       0 ||  500.00 || 2500.00
+31/01/2022 || 2000.00 ||       0 || 3000.00
+31/01/2022 || 1000.00 ||       0 || 1000.00
+            output
+            ).to_stdout
+    end  
+  end
 end

@@ -19,7 +19,7 @@ describe BankAccount do
 
     it 'produces a transaction with 31/01/2022, 1000, 1000 details' do
       bank_account.add_to_balance(1000, faketoday)
-      expect(bank_account.transactions).to include({ :date => '31/01/2022', :credit => 1000, :balance => 1000 })
+      expect(bank_account.transactions).to include({ :date => '31/01/2022', :credit => 1000, :debit => 0, :balance => 1000 })
     end
   end
 
@@ -34,7 +34,7 @@ describe BankAccount do
       bank_account.add_to_balance(1000)
       bank_account.remove_from_balance(200, faketoday)
       p bank_account
-      expect(bank_account.transactions).to include({ :date => '31/01/2022', :debit => 200, :balance => 800 })
+      expect(bank_account.transactions).to include({ :date => '31/01/2022', :credit => 0, :debit => 200, :balance => 800 })
     end
   end
 end
