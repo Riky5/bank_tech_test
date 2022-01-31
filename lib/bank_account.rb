@@ -7,4 +7,8 @@ class BankAccount
   def get_balance
     @balance
   end
+
+  def add_to_balance(amount)
+    @balance += amount
+  end
 end
