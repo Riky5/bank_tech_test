@@ -28,13 +28,13 @@ A simple program that simulates a bank and its basic functionalities.
 ```
 2. Create a bank account:
 ```
-  3.0.2 :001 > my_account = BankAccount.new
-  => #<BankAccount:0x00000001451cd180 @balance=0, @transactions=[]> 
+  3.0.2 :001 > my_account = BankAccount.new(500)
+  => #<BankAccount:0x00000001451cd180 @balance=0, @overdraft_limit=400, @transactions=[]> 
 ```
 3. Add your account to the bank:
 ```
   3.0.2 :002 > my_bank = Bank.new(my_account)
-  => #<Bank:0x00000001450be208 @account=#<BankAccount:0x00000001451cd180 @balance=0, @transactions=[]>> 
+  => #<Bank:0x00000001450be208 @account=#<BankAccount:0x00000001451cd180 @balance=0, @overdraft_limit=400, @transactions=[]>> 
 ```
 4. Make a deposit (example)
 ```
@@ -48,12 +48,26 @@ A simple program that simulates a bank and its basic functionalities.
   [{:date=>"31/01/2022", :credit=>3000, :debit=>0, :balance=>3000},
   {:date=>"01/02/2022", :credit=>0, :debit=>600, :balance=>2400}] 
 ```
-6. Print a statement
+6. You can withdraw more than you have if you set up an overdraft limit when creating the account (in our example we have 500 overdraft limit)
 ```
-  3.0.2 :005 > my_bank.print_statement
+  3.0.2 :017 > my_bank.withdraw_money(2600)
+  => 
+  [{:date=>"01/02/2022", :credit=>3000, :debit=>0, :balance=>3000},
+ {:date=>"01/02/2022", :credit=>0, :debit=>600, :balance=>2400},
+ {:date=>"01/02/2022", :credit=>0, :debit=>2600, :balance=>-200}] 
+```
+7. It is not possible to withdraw more than the overdraft limit
+```
+  3.0.2 :018 > my_bank.withdraw_money(400)
+  /Users/rikytraveller/Projects/Bank-Tech-Test/lib/bank_account.rb:28:in `check_overdraft': Denied! You cannot withdraw more than your overdraft limit! (RuntimeError)
+```
+8. Print a statement
+```
+ 3.0.2 :019 > my_bank.print_statement
   date       || credit  ||  debit  || balance
+  01/02/2022 ||    0.00 || 2600.00 || -200.00          
   01/02/2022 ||    0.00 ||  600.00 || 2400.00          
-  31/01/2022 || 3000.00 ||    0.00 || 3000.00 
+  31/01/2022 || 3000.00 ||    0.00 || 3000.00  
 ```
 
 ---
