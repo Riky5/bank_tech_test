@@ -18,13 +18,13 @@ describe 'Bank functionalities' do
     expect { bank.withdraw_money(3000, fakedate) }.to output(<<~OUTPUT
       Successfully withdrawed 3000
     OUTPUT
-                                                  ).to_stdout
+                                                            ).to_stdout
 
     # uses overdraft limit when withdrawing
     expect { bank.withdraw_money(2100, fakedate) }.to output(<<~OUTPUT
       Successfully withdrawed 2100
     OUTPUT
-                                                  ).to_stdout
+                                                            ).to_stdout
 
     expect { bank.print_statement }.to output(<<~OUTPUT
       date       ||    credit ||     debit ||   balance
