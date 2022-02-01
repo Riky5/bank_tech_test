@@ -75,3 +75,15 @@ A simple program that simulates a bank and its basic functionalities.
 
 ![planning_screenshot](images/Bank_Tech_Test.png)
 
+Approach:
+
+Based on user stories created I have decided to have 2 classes. 
+- Bank Account
+- Bank
+
+Bank is where the user mainly interacts with the program. I have visualised the bank class as an ATM where the user can make_deposit(), withdraw_money() and print_statement().
+
+BankAccount is what's happening behind the scene. It's where the balance and transactions are stored. It has 4 methods read_balance(), add_to_balance(), remove_from_balance(), and a private method check_overdraft(). The user can set an overdraft amount when creating the BankAccount or leave the default 0.
+
+Bank takes a BankAccount as an argument so that it can interact with and get all details.
+

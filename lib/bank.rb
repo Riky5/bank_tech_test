@@ -7,10 +7,6 @@ class Bank
     @account = bank_account
   end
 
-  # moved ---> date = Time.new.strftime('%d/%m/%Y') <--- in this class only for tests purposes.
-  # originally it was in BankAccount class and it worked well.
-  # Because of testing 'today s date' in feature spec I had to move it here.
-
   def make_deposit(amount_deposit, date = Time.new.strftime('%d/%m/%Y'))
     @account.add_to_balance(amount_deposit, date)
     puts "Successfully deposited #{amount_deposit}"
@@ -22,13 +18,17 @@ class Bank
   end
 
   def print_statement
-    puts 'date       ||' + 'credit'.rjust(10) + ' ||' + 'debit'.rjust(10) + ' ||' + 'balance'.rjust(10)
+    print_header
     @account.transactions.reverse.each do |transaction|
-      puts "#{
-              transaction[:date]} ||" + "#{format('%.2f',
+      puts "#{transaction[:date]} ||" + "#{format('%.2f',
               transaction[:credit]).to_s.rjust(10)} ||" + "#{format('%.2f',
               transaction[:debit]).to_s.rjust(10)} ||" + format('%.2f',
               transaction[:balance]).to_s.rjust(10).to_s
     end
+  end
+
+  def print_header
+    puts 'date       ||' + 'credit'.rjust(10) + ' ||' +
+         'debit'.rjust(10) + ' ||' + 'balance'.rjust(10)
   end
 end
