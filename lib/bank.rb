@@ -13,8 +13,12 @@ class Bank
   end
 
   def withdraw_money(amount, date = Time.new.strftime('%d/%m/%Y'))
-    @account.remove_from_balance(amount, date)
-    puts "Successfully withdrawed #{amount}"
+    begin
+      @account.remove_from_balance(amount, date)
+      puts "Successfully withdrawed #{amount}"
+    rescue => e
+      puts e.message
+    end
   end
 
   def print_statement
