@@ -16,9 +16,9 @@ class Bank
   end
 
   def print_statement
-    puts "date       || credit  ||  debit  || balance"
+    puts 'date       || credit  ||  debit  || balance'
     @account.transactions.reverse.each do |transaction|
-      puts "#{transaction[:date]} ||" + "#{sprintf("%.2f",transaction[:credit]).to_s.rjust(8)} ||" + "#{sprintf("%.2f",transaction[:debit]).to_s.rjust(8)} ||" + " #{sprintf("%.2f",transaction[:balance])}"
+      puts "#{ transaction[:date]} ||" + "#{format('%.2f', transaction[:credit]).to_s.rjust(8)} ||" + "#{format('%.2f', transaction[:debit]).to_s.rjust(8)} ||" + " #{format('%.2f', transaction[:balance])}"
     end
   end
 end
