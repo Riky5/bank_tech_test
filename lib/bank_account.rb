@@ -1,5 +1,5 @@
 class BankAccount
-  attr_reader :transactions
+  attr_reader :transactions, :balance
 
   def initialize(overdraft = 0)
     @balance = 0
@@ -7,24 +7,15 @@ class BankAccount
     @overdraft_limit = overdraft
   end
 
-  def read_balance
-    @balance
-  end
-
   def add_to_balance(credit, date)
     @balance += credit
-    @transactions << { date: date.to_s,
-                       credit: "#{credit}.00".to_i,
-                       debit: 0,
-                       balance: read_balance }
+    @transactions << { date: date, credit: credit, balance: @balance }
   end
 
   def remove_from_balance(debit, date)
     check_overdraft(debit)
     @balance -= debit
-    @transactions << { date: date.to_s,
-                       credit: 0, debit: "#{debit}.00".to_i,
-                       balance: read_balance }
+    @transactions << { date: date, debit: debit, balance: @balance }
   end
 
   private

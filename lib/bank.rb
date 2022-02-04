@@ -9,30 +9,26 @@ class Bank
 
   def make_deposit(amount_deposit, date = Time.new.strftime('%d/%m/%Y'))
     @account.add_to_balance(amount_deposit, date)
-    puts "Successfully deposited #{amount_deposit}"
   end
 
   def withdraw_money(amount, date = Time.new.strftime('%d/%m/%Y'))
-    begin
-      @account.remove_from_balance(amount, date)
-      puts "Successfully withdrawed #{amount}"
-    rescue => e
-      puts e.message
-    end
+    @account.remove_from_balance(amount, date)
+  rescue StandardError => e
+    puts e.message
   end
 
   def print_statement
     print_header
     @account.transactions.reverse.each do |transaction|
-      puts "#{transaction[:date]} ||" + "#{format('%.2f',
-              transaction[:credit]).to_s.rjust(10)} ||" + "#{format('%.2f',
-              transaction[:debit]).to_s.rjust(10)} ||" + format('%.2f',
-              transaction[:balance]).to_s.rjust(10).to_s
+      credit = transaction[:credit].nil? ? ' ' : " #{format('%.2f', transaction[:credit])} "
+      debit = transaction[:debit].nil? ? ' ' : " #{format('%.2f', transaction[:debit])} "
+      puts "#{transaction[:date]} ||" + credit + '||' + debit + '||' + " #{format('%.2f', transaction[:balance])}"
     end
   end
 
+  private
+
   def print_header
-    puts 'date       ||' + 'credit'.rjust(10) + ' ||' +
-         'debit'.rjust(10) + ' ||' + 'balance'.rjust(10)
+    puts 'date || credit || debit || balance'
   end
 end
